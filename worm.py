@@ -16,8 +16,7 @@ turtle.color('black', seeworm )
 turtle.begin_fill()
 turtle.shape('turtle')
 turtle.pensize(5)
-turtle.speed(2)
-
+turtle.speed(0)
 
 turtle.penup()
 turtle.forward(-20)
@@ -104,8 +103,6 @@ turtle.begin_fill()
 turtle.circle(c)
 turtle.end_fill()
 
-
-
 turtle.penup()
 turtle.right(90)
 turtle.backward(30)
@@ -128,9 +125,5 @@ turtle.end_fill()
 turtle.backward(45)
 turtle.penup()
 turtle.forward(222)
-
-
-
-
 
 turtle.mainloop()
