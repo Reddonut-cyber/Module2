@@ -1,4 +1,4 @@
-name_studen = input("name: " )
+"""name_studen = input("name: " )
 point  = float(input("point: "))
 if point >= 80:
     print(name_studen, "grade: A", "ดีมากเก่งมาก")
@@ -9,4 +9,7 @@ elif point >= 60:
 elif point >= 50:
     print(name_studen, "grade: D", "ไม่ดีละ สู้!!")
 else :
-    print(name_studen, "grade: F", "ว๊ายๆๆๆ ไม่ผ่านนนนน")
+    print(name_studen, "grade: F", "ว๊ายๆๆๆ ไม่ผ่านนนนน")"""
+charactor = input()
+num_of_word = charactor.count("f")
+print(num_of_word)

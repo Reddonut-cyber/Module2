@@ -1,23 +1,9 @@
-"""print('hellow')
-print("hello", "world", sep="+")
-print("hello", "world", sep="\n")
-""" """
-print(type(2.87))
-print(isinstance(-6.6, int))
+num_of_index = int(input())
+list_of_number = list(map(int, input().split()))
 
-name = input("ใส่ชื่อมึงมา: ")
-print("hello", name)"""
-
-"""num = int(input())
-if num >=81:
-    print("Achieved")
-elif num >= 41:
-    print("Developing")
+for i in range(num_of_index - 1):
+    if list_of_number[i] * list_of_number[i + 1 ] > 0:
+        print("YES")
+        break
 else:
-    print("Emerging" )
-    """
-
-tac = input()
-index = int(input())
-sum = tac[index - 1]
-print(sum)
+    print("NO")
