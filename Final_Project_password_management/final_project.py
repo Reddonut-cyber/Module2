@@ -1,10 +1,10 @@
 import json
 import os
 
-# กำหนดชื่อไฟล์ที่จะเก็บข้อมูลรหัสผ่าน
+#Specify the file name to store the password data.
 password_file = "key_store.key"
 
-# ตัวใช้ในการ encode
+# Dict for use in encodetion
 encode_dict = {
  'a': -1, 'b': -2, 'c': -3, 'd': -4, 'e': -5, 'f': -6, 'g': -7, 'h': -8, 'i': -9, 
  'j': 10, 'k': 11, 'l': 12, 'm': 13, 'n': 14, 'o': 15, 'p': 16, 'q': 17, 
@@ -19,27 +19,27 @@ encode_dict = {
  '>': 82, '?': 83, '@': 84, '[': 85, '\\': 86, ']': 87, '^': 88, '_': 89, 
  '`': 90, '{': 91, '|': 92, '}': 93, '~': 94, ' ': 95
 }
-
+#Dict for use in decode
 decode_dict = {}
 for k, v in encode_dict.items():
     decode_dict[str(v)] = k
 
 
-# ฟังก์ชันเพื่อโหลดข้อมูลจากไฟล์ JSON
-def load_passwords():
+# The function to load data from a JSON file
+def load_passwords()->dict:
     if os.path.exists(password_file):
         with open(password_file, 'r') as file:
             return json.load(file)
     else:
         return {}
 
-# ฟังก์ชันเพื่อบันทึกข้อมูลลงในไฟล์ JSON
-def save_passwords(passwords):
+# The function to saves data into a JSON file
+def save_passwords(passwords:dict)->None:
     with open(password_file, 'w') as file:
         json.dump(passwords, file, indent=4)
 
 #encode
-def password_encode(password):
+def password_encode(password:str)->str:
     encode_password = "" 
     for i in range(len(password)):
         find_in_encode_dict = password[i]
@@ -47,38 +47,38 @@ def password_encode(password):
     return encode_password 
 
 #decode
-def password_decode(password):
+def password_decode(password:str)->str:
     num_of_decode_loop = len(password) // 2
     stock = ""
     for i in range(num_of_decode_loop):
          i = i * 2
-         find_in_decode_dict = password[i : i+2]
+         find_in_decode_dict = password[i:i+2]
          stock += str(decode_dict[find_in_decode_dict])
     return stock
 
-# ฟังก์ชันเพื่อเพิ่มรหัสผ่านใหม่
-def add_password(service, username, password):
+# ฟังก์ชันเพื่อเพิ่มรหัสผ่านใหม่ The function for add new passwords
+def add_password(username:str, appname:str, password:str)->None:
     passwords = load_passwords()
-    passwords[service] = {
-        'username': username,
+    passwords[username] = {
+        'appname': appname,
         'password': password_encode(password)
     }
     save_passwords(passwords)
-    print(f"Password for {service} saved successfully!")
+    print(f"Password for {username} saved successfully!")
 
-# ฟังก์ชันเพื่อดึงรหัสผ่าน
-def get_password(service):
+# Function to retrieve a password
+def get_password(username:str)->None:
     passwords = load_passwords()
-    if service in passwords:
-        username = passwords[service]['username']
-        password = passwords[service]['password']
+    if username in passwords:
+        appname = passwords[username]['appname']
+        password = passwords[username]['password']
         decode = password_decode(password)
-        print(f"Service: {service}\nUsername: {username}\nPassword: {decode}")
+        print(f"Username: {username}\nAppname: {appname}\nPassword: {decode}")
     else:
-        print(f"No password found for {service}")
+        print(f"No password found for {username}")
 
-# ฟังก์ชันเพื่อแสดงบริการที่เก็บรหัสผ่านไว้ทั้งหมด
-def list_services():
+# Function to display all services where passwords are stored
+def list_usernames()->None:
     """
     List all services and passwords that has been recorded to the system.
 
@@ -88,14 +88,14 @@ def list_services():
     """
     passwords = load_passwords() 
     if passwords:
-        print("Stored services:")
-        for service in passwords:
-            print(f"- {service}")
+        print("Stored username:")
+        for username in passwords:
+            print(f"- {username}")
     else:
         print("No passwords stored yet.")
 
-# เมนูหลักของโปรแกรม
-def main():
+# Menu
+def main()->None:
     while True:
         print("\nPassword Manager")
         print("1. Add new password")
@@ -106,20 +106,20 @@ def main():
         choice = input("Choose an option: ")
 
         if choice == '1':
-            service = input("Enter the service name: ")
             username = input("Enter the username: ")
+            appname = input("Enter the appname: ")
             password = input("Enter the password: ")
-            add_password(service, username, password)
+            add_password(username, appname, password)
         elif choice == '2':
             service = input("Enter the service name: ")
-            get_password(service)
+            get_password(username)
         elif choice == '3':
-            list_services()
+            list_usernames()
         elif choice == '4':
             break
         else:
             print("Invalid option. Please choose again.")
 
-# เริ่มโปรแกรม
+# Start programe
 if __name__ == '__main__':
     main()
