@@ -43,11 +43,6 @@ decode_dict = {
 
 #encode
 def password_encode(password):
-    """
-    
-    """
-
-
     encode_password = "" 
     for i in range(len(password)):
         finde_in_encode_dict = password[i]
@@ -60,12 +55,14 @@ def password_encode(password):
         
 #decode
 def password_decode(deio):
-    decode_password = ""
+    num_of_decode_loop = len(deio) // 2
+    i = 0
+    c = ""
     for i in range(num_of_decode_loop):
          i *= 2
-         finde_in_decode_dict = deio[i:i+2:]
-         decode_password += str(decode_dict[finde_in_decode_dict])
-    print(decode_password)
+         finde_in_decode_dict = deio[i : i+2:]
+         c += str(decode_dict[finde_in_decode_dict])
+    print(c)
 
     
 

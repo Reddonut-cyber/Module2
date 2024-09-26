@@ -4,6 +4,14 @@ import os
 # กำหนดชื่อไฟล์ที่เก็บ
 file_key = "store.key"
 
+# ฟังก์ชันเพื่อโหลดข้อมูลจากไฟล์ JSON
+def load_passwords():
+    if os.path.exists(file_key):
+        with open(file_key, 'r') as file:
+            return json.load(file)
+    else:
+        return {}
+
 # ตัวใช้ในการ encode
 encode_dict = {
  'a': -1, 'b': -2, 'c': -3, 'd': -4, 'e': -5, 'f': -6, 'g': -7, 'h': -8, 'i': -9, 
@@ -27,12 +35,15 @@ decode_dict = {str(v): k for k, v in encode_dict.items()}
 def password_encode(password):
     encode_password = ""
     for char in password:
-        encode_password += str(encode_dict[char]) + " "
+        encode_password += str(encode_dict[char]) + " "     
+    print(encode_password)
     
     # เขียนพาสเวิร์ดที่เข้ารหัสลงไฟล์
     with open(file_key, "w") as f:
         f.write(encode_password.strip())  # ตัดช่องว่างท้ายออก
     print(f"Password encoded and saved to {file_key}")
+
+
 
 # ฟังก์ชันถอดรหัส
 def password_decode():
@@ -46,14 +57,27 @@ def password_decode():
     for item in encoded_content:
         decode_password += decode_dict[item]
     
-    print("Decoded password:", decode_password)
+    print("Your password:", decode_password)
 
 # ใช้งาน
-action = input("""""")
+while True:
+    print("1.Add password: ")
+    print("2.Get password: ")
+    print("3.Exist: ")
+    action = input("What do you want to do:")
 
-if action == 'encode':
-    password = input("Enter the password to encode: ")
-    password_encode(password)
+    if action == '1':
+        username = input("Your user name: ")
+        app_name = input("App name: ")
+        password = input("Password: ")
+        password_encode(password)
 
-elif action == 'decode':
-    password_decode()
+    elif action == '2':
+        password_decode()
+    elif action == '3':
+        print("CU")
+        break
+    else:
+        print("We doesn't have that:")
+
+

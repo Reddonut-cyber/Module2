@@ -2,7 +2,7 @@ import json
 import os
 
 # กำหนดชื่อไฟล์ที่จะเก็บข้อมูลรหัสผ่าน
-password_file = "key_store.key"
+password_file = "store.key"
 
 # ตัวใช้ในการ encode
 encode_dict = {
@@ -20,9 +20,21 @@ encode_dict = {
  '`': 90, '{': 91, '|': 92, '}': 93, '~': 94, ' ': 95
 }
 
-decode_dict = {}
-for k, v in encode_dict.items():
-    decode_dict[str(v)] = k
+#ตัวใช้ในการdecode
+decode_dict = {
+ '-1': 'a', '-2': 'b', '-3': 'c', '-4': 'd', '-5': 'e', '-6': 'f', '-7': 'g', '-8': 'h', '-9': 'i',
+ '10': 'j', '11': 'k', '12': 'l', '13': 'm', '14': 'n', '15': 'o', '16': 'p', '17': 'q',
+ '18': 'r', '19': 's', '20': 't', '21': 'u', '22': 'v', '23': 'w', '24': 'x', '25': 'y',
+ '26': 'z', '27': 'A', '28': 'B', '29': 'C', '30': 'D', '31': 'E', '32': 'F', '33': 'G',
+ '34': 'H', '35': 'I', '36': 'J', '37': 'K', '38': 'L', '39': 'M', '40': 'N', '41': 'O',
+ '42': 'P', '43': 'Q', '44': 'R', '45': 'S', '46': 'T', '47': 'U', '48': 'V', '49': 'W',
+ '50': 'X', '51': 'Y', '52': 'Z', '53': '0', '54': '1', '55': '2', '56': '3', '57': '4',
+ '58': '5', '59': '6', '60': '7', '61': '8', '62': '9', '63': '!', '64': '"', '65': '#',
+ '66': '$', '67': '%', '68': '&', '69': "'", '70': '(', '71': ')', '72': '*', '73': '+',
+ '74': ',', '75': '-', '76': '.', '77': '/', '78': ':', '79': ';', '80': '<', '81': '=',
+ '82': '>', '83': '?', '84': '@', '85': '[', '86': '\\', '87': ']', '88': '^', '89': '_',
+ '90': '`', '91': '{', '92': '|', '93': '}', '94': '~', '95': ' '
+}
 
 
 # ฟังก์ชันเพื่อโหลดข้อมูลจากไฟล์ JSON
@@ -42,19 +54,18 @@ def save_passwords(passwords):
 def password_encode(password):
     encode_password = "" 
     for i in range(len(password)):
-        find_in_encode_dict = password[i]
-        encode_password += str(encode_dict[find_in_encode_dict])
+        finde_in_encode_dict = password[i]
+        encode_password += str(encode_dict[finde_in_encode_dict])
     return encode_password 
 
-#decode
-def password_decode(password):
-    num_of_decode_loop = len(password) // 2
-    stock = ""
-    for i in range(num_of_decode_loop):
-         i = i * 2
-         find_in_decode_dict = password[i : i+2]
-         stock += str(decode_dict[find_in_decode_dict])
-    return stock
+
+#decode  
+def password_decode():
+    decode_password = ""
+    for i in range(0, len(str), 2):
+         find_in_decode_dict = [i]
+         decode_password += decode_dict[str[i:i+2]]
+    return decode_password
 
 # ฟังก์ชันเพื่อเพิ่มรหัสผ่านใหม่
 def add_password(service, username, password):
@@ -72,20 +83,12 @@ def get_password(service):
     if service in passwords:
         username = passwords[service]['username']
         password = passwords[service]['password']
-        decode = password_decode(password)
-        print(f"Service: {service}\nUsername: {username}\nPassword: {decode}")
+        print(f"Service: {service}\nUsername: {username}\nPassword: {password}")
     else:
         print(f"No password found for {service}")
 
 # ฟังก์ชันเพื่อแสดงบริการที่เก็บรหัสผ่านไว้ทั้งหมด
 def list_services():
-    """
-    List all services and passwords that has been recorded to the system.
-
-    Args: None
-
-    Return: None
-    """
     passwords = load_passwords() 
     if passwords:
         print("Stored services:")
@@ -109,6 +112,7 @@ def main():
             service = input("Enter the service name: ")
             username = input("Enter the username: ")
             password = input("Enter the password: ")
+            password_encode(password)
             add_password(service, username, password)
         elif choice == '2':
             service = input("Enter the service name: ")
