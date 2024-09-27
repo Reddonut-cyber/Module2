@@ -149,7 +149,7 @@ def main() -> None:
                 print("Do not put ' ' Change your it now!")
                 appname = input("Enter the appname: ")
             password = input("Enter the password: ")
-            while " " in appname:
+            while " " in password:
                 print("Do not put ' ' Change your it now!")
                 password = input("Enter the password: ")
             add_password(username, appname, password)
