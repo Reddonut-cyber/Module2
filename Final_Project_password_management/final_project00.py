@@ -141,15 +141,15 @@ def main() -> None:
 
         if choice == '1':
             username = input("Enter the username: ")
-            while " " in username:
+            while " " or "" in username:
                 print("Do not put ' ' Change your it now!")
                 username = input("Enter the username: ")
             appname = input("Enter the appname: ")
-            while " " in appname:
+            while " " or "" in appname:
                 print("Do not put ' ' Change your it now!")
                 appname = input("Enter the appname: ")
             password = input("Enter the password: ")
-            while " " in password:
+            while " " or "" in password:
                 print("Do not put ' ' Change your it now!")
                 password = input("Enter the password: ")
             add_password(username, appname, password)
