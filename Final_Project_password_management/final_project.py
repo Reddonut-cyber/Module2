@@ -26,7 +26,7 @@ for k, v in encode_dict.items():
 
 
 # The function to load data from a JSON file
-def load_passwords()->dict:
+def load_passwords() -> dict:
     if os.path.exists(password_file):
         with open(password_file, 'r') as file:
             return json.load(file)
@@ -34,12 +34,12 @@ def load_passwords()->dict:
         return {}
 
 # The function to saves data into a JSON file
-def save_passwords(passwords:dict)->None:
+def save_passwords(passwords: dict) -> None:
     with open(password_file, 'w') as file:
         json.dump(passwords, file, indent=4)
 
 #encode
-def password_encode(password:str)->str:
+def password_encode(password: str) -> str:
     encode_password = "" 
     for i in range(len(password)):
         find_in_encode_dict = password[i]
@@ -47,7 +47,7 @@ def password_encode(password:str)->str:
     return encode_password 
 
 #decode
-def password_decode(password:str)->str:
+def password_decode(password: str) -> str:
     num_of_decode_loop = len(password) // 2
     stock = ""
     for i in range(num_of_decode_loop):
@@ -57,7 +57,7 @@ def password_decode(password:str)->str:
     return stock
 
 # ฟังก์ชันเพื่อเพิ่มรหัสผ่านใหม่ The function for add new passwords
-def add_password(username:str, appname:str, password:str)->None:
+def add_password(username: str, appname: str, password: str) -> None:
     passwords = load_passwords()
     passwords[username] = {
         'appname': appname,
@@ -67,7 +67,12 @@ def add_password(username:str, appname:str, password:str)->None:
     print(f"Password for {username} saved successfully!")
 
 # Function to retrieve a password
-def get_password(username:str)->None:
+def get_password(username: str) -> None:
+    """
+    Load the password from the file key_store.key using the key, which is the username.
+    Then, decrypt the password and print it out.
+    return None
+    """
     passwords = load_passwords()
     if username in passwords:
         appname = passwords[username]['appname']
@@ -78,7 +83,7 @@ def get_password(username:str)->None:
         print(f"No password found for {username}")
 
 # Function to display all services where passwords are stored
-def list_usernames()->None:
+def list_usernames() -> None:
     """
     List all services and passwords that has been recorded to the system.
 
@@ -95,7 +100,7 @@ def list_usernames()->None:
         print("No passwords stored yet.")
 
 # Menu
-def main()->None:
+def main() -> None:
     while True:
         print("\nPassword Manager")
         print("1. Add new password")
